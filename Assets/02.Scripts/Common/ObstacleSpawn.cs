@@ -5,19 +5,18 @@ using UnityEngine;
 public class ObstacleSpawn : MonoBehaviour
 {
 
-    public GameObject obstacle;
+    public GameObject horizontalObj;
+    public GameObject verticalObj;
 
-    public List<Transform> points;
+    [SerializeField]
+    private List<Transform> points;
 
     //public GameObject tile;
     //private List<Tile> tiles;
 
-    bool isBulid;
+    
 
-    private void Awake()
-    {
-
-    }
+    
 
     void Update()
     {
@@ -33,7 +32,7 @@ public class ObstacleSpawn : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
 
-            if(hit.transform.CompareTag("Point") && points.Count == 0)
+            if(hit.transform.CompareTag("Point") && points.Count == 0 )
             {
                 points.Add(hit.transform);
             }
@@ -45,7 +44,7 @@ public class ObstacleSpawn : MonoBehaviour
 
                 obstacleSpawner(points[0], points[1]);
             }   
-            Debug.Log("똑같은 곳에 장애물을 설치할 수 없습니다!!!@@!@@!!!");
+            Debug.Log("똑같은 곳에 장애물을 설치할 수 없습니다!!!");
         }
 
     }
@@ -63,14 +62,9 @@ public class ObstacleSpawn : MonoBehaviour
         firstPoint.isBuildObstacle = true;
         secondPoint.isBuildObstacle = true;
 
-        isBulid = true;
-
         Vector3 obstacleDir = firstPointTr.position - lastPointTr.position;
 
-        Debug.LogError(obstacleDir);
-
-        float angle = Mathf.Atan2(obstacleDir.y, obstacleDir.x) * Mathf.Rad2Deg;
-        Instantiate(obstacle, firstPointTr.position, ObstacleRotate(obstacleDir));
+        Instantiate(horizontalObj, firstPointTr.position, ObstacleRotate(obstacleDir));
 
         points.RemoveAt(0);
         points.RemoveAt(0);
