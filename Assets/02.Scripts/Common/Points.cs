@@ -11,4 +11,21 @@ public class Points : MonoBehaviour
     {
         isBuildObstacle = false;   
     }
+
+    private void Update()
+    {
+        ActivePoint();
+    }
+
+    void ActivePoint()
+    {
+        if(isBuildObstacle == true)
+        {
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            this.gameObject.SetActive(true);
+        }
+    }
 }
