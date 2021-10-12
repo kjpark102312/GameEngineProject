@@ -12,6 +12,12 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefabs;
 
 
+    public List<GameObject> enemyList;
+    private void Start()
+    {
+        StartWave(currentWave);
+    }
+
     public void StartWave(Wave wave)
     {
         currentWave = wave;
@@ -22,11 +28,17 @@ public class EnemySpawner : MonoBehaviour
 
     public IEnumerator EnemySpawn()
     {
-        while (true)
+
+        int spawnEnemyCount = 0;
+        while (spawnEnemyCount < currentWave.maxEnemyCount)
         {
             Instantiate(enemyPrefabs, transform.position, Quaternion.identity);
 
-            //yield return new WaitForSeconds();    
+            enemyList.Add(enemyPrefabs);
+
+            yield return new WaitForSeconds(currentWave.spawnTime);
+
+            spawnEnemyCount++;
         }
     }
 }
