@@ -11,6 +11,8 @@ public class ObstacleSpawn : MonoBehaviour
 
     [SerializeField]
     private List<Transform> points;
+    [SerializeField]
+    private LaserSpawner laserSpawner;
 
     private int obstacleCost = 50;
 
@@ -29,8 +31,8 @@ public class ObstacleSpawn : MonoBehaviour
                 Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
 
                 RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
-
-                if(hit.transform.CompareTag("Point") && points.Count == 0 ) 
+                
+                if (hit.transform.CompareTag("Point") && points.Count == 0 ) 
                 {
                     points.Add(hit.transform);
                 }
@@ -41,7 +43,7 @@ public class ObstacleSpawn : MonoBehaviour
                     Debug.Log("두번째 트랜스폼");
 
                     obstacleSpawner(points[0], points[1]);
-                }   
+                }
                 Debug.Log("똑같은 곳에 장애물을 설치할 수 없습니다!!!");
             }
         }

@@ -2,23 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Points : MonoBehaviour
+public class Tower : MonoBehaviour
 {
-    public bool isBuildObstacle { set; get; }
+   
+    public bool isBuildTower { set; get; }
+
+    
 
     private void Awake()
     {
-        isBuildObstacle = false;   
+        isBuildTower = false;
     }
 
     private void Update()
     {
-        ActivePoint();
+        ActiveTower();
     }
 
-    void ActivePoint()
+    void ActiveTower()
     {
-        if(isBuildObstacle == true)
+        if (isBuildTower == true)
         {
             this.gameObject.SetActive(false);
         }

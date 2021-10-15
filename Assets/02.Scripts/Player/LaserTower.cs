@@ -22,7 +22,7 @@ public class LaserTower : MonoBehaviour
             yield return null;
         }
     }
-
+    
     private void SpawnLaser()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 100f);
@@ -30,7 +30,7 @@ public class LaserTower : MonoBehaviour
         line.SetPosition(0, transform.position);
         if (hit)
         {
-            line.SetPosition(1, hit.point);
+            line.SetPosition(1, transform.right * 100);
 
             if (hit.transform.CompareTag("Obstacle") && isSpawnLaser == false)
             {
@@ -50,9 +50,7 @@ public class LaserTower : MonoBehaviour
 
                     Debug.Log(line.positionCount);
                 }
-
                 isSpawnLaser = true;
-
             }
             else if(hit.transform.CompareTag("Enemy"))
             {
@@ -60,10 +58,6 @@ public class LaserTower : MonoBehaviour
                 line.SetPosition(1, hit.point);
             }
         }
-
-
-        
-
     }
 
     void Update()
