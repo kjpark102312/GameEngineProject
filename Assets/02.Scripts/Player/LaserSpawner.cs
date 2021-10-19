@@ -36,7 +36,7 @@ public class LaserSpawner : MonoBehaviour
 
                     RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
 
-                    bool isHit = 
+                    //bool isHit = 
 
                     if (hit.transform.CompareTag("TowerPos"))
                     {
