@@ -31,8 +31,10 @@ public class ObstacleSpawn : MonoBehaviour
                 Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
 
                 RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
-                
-                if (hit.transform.CompareTag("Point") && points.Count == 0 ) 
+
+                if(hit.collider == null) return;
+                    
+                if (hit.transform.CompareTag("Point") && points.Count == 0) 
                 {
                     points.Add(hit.transform);
                 }
@@ -40,11 +42,11 @@ public class ObstacleSpawn : MonoBehaviour
                 {
                     points.Add(hit.transform);
 
-                    Debug.Log("µÎ¹øÂ° Æ®·£½ºÆû");
+                    Debug.Log("ï¿½Î¹ï¿½Â° Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
                     obstacleSpawner(points[0], points[1]);
                 }
-                Debug.Log("¶È°°Àº °÷¿¡ Àå¾Ö¹°À» ¼³Ä¡ÇÒ ¼ö ¾ø½À´Ï´Ù!!!");
+                Debug.Log("ï¿½È°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!!!");
             }
         }
 

@@ -9,12 +9,29 @@ public class LaserTower : MonoBehaviour
     public LineRenderer line;
     private LayerMask targetLayer;
 
+    public LaserSpawner laserSpawner;
+
     public float power = 1f;
 
     private bool isSpawnLaser;
+    private RaycastHit2D hit ;
+    
+    private Vector2 laserDir;
+
+    private void Awake() 
+    {
+        laserSpawner = GameObject.Find("LaserSpawner").GetComponent<LaserSpawner>();
+        
+    }
+
+    private void Start() 
+    {
+        laserSpawner.LaserDir(hit);
+        laserDir = laserSpawner.laserDir;
+    }
+
     public IEnumerator LaserCo()
     {
-
         while(true)
         {
             SpawnLaser();
@@ -25,13 +42,11 @@ public class LaserTower : MonoBehaviour
     
     private void SpawnLaser()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 100f);
-
         line.SetPosition(0, transform.position);
+        line.SetPosition(1, laserDir * 100);
+
         if (hit)
         {
-            line.SetPosition(1, transform.right * 100);
-
             if (hit.transform.CompareTag("Obstacle") && isSpawnLaser == false)
             {
                 for (int i = 2; i < 3; i++)
