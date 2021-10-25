@@ -15,8 +15,13 @@ public class LaserTower : MonoBehaviour
 
     private bool isSpawnLaser;
     private RaycastHit2D hit ;
-    
+    private RaycastHit2D hitObstacle;
+
     private Vector2 laserDir;
+
+    private int laserCount = 1;
+
+    private bool laserHit = true;
 
     private void Awake() 
     {
@@ -30,53 +35,69 @@ public class LaserTower : MonoBehaviour
         laserDir = laserSpawner.laserDir;
     }
 
-    public IEnumerator LaserCo()
-    {
-        while(true)
-        {
-            SpawnLaser();
-
-            yield return null;
-        }
-    }
     
-    private void SpawnLaser()
-    {
-        line.SetPosition(0, transform.position);
-        line.SetPosition(1, laserDir * 100);
-
-        if (hit)
-        {
-            if (hit.transform.CompareTag("Obstacle") && isSpawnLaser == false)
-            {
-                for (int i = 2; i < 3; i++)
-                {
-                    Vector2 inNormal = Vector3.Normalize(transform.position - hit.transform.position);
-                    Vector2 bounceVector = Vector3.Reflect(transform.right, hit.normal);
-
-                    Debug.LogError(bounceVector);
-                    Debug.DrawRay(hit.point, Vector3.Reflect(transform.right, hit.normal), Color.red);
-
-                    RaycastHit2D hitObstacle = Physics2D.Raycast(hit.point, bounceVector, 100f);
-
-                    line.positionCount++;
-
-                    line.SetPosition(2, hit.transform.position + Vector3.Reflect(transform.right, hit.normal) * 10f);
-
-                    Debug.Log(line.positionCount);
-                }
-                isSpawnLaser = true;
-            }
-            else if(hit.transform.CompareTag("Enemy"))
-            {
-                hit.transform.GetComponent<EnemyHp>().GetDamage(power);
-                line.SetPosition(1, hit.point);
-            }
-        }
-    }
-
     void Update()
     {
-        SpawnLaser();
+        BounceLaser();
     }
+
+    private void SpawnLaser()
+    {
+        Vector2 bounceVector = Vector3.Reflect(laserDir, hit.normal);
+
+        Debug.DrawRay(hit.point, Vector3.Reflect(laserDir, hit.normal), Color.red);
+
+        hitObstacle = Physics2D.Raycast(hit.point, bounceVector, 100f);
+
+        line.positionCount++;
+        laserCount++;
+        line.SetPosition(1, hit.point);
+        line.SetPosition(2, hit.transform.position + Vector3.Reflect(laserDir, hit.normal) * 10f);
+
+        Debug.Log(line.positionCount);
+        isSpawnLaser = true;
+
+        //if(hitObstacle.transform.CompareTag("Obstacle"))
+        //{
+        //    line.positionCount++;
+        //    laserCount++;
+        //    line.SetPosition(1, hit.point);
+        //    line.SetPosition(laserCount, hit.transform.position + Vector3.Reflect(laserDir, hit.normal) * 10f);
+        //}
+    }
+
+    public void BounceLaser()
+    {
+        if(laserHit)
+        {
+            line.SetPosition(0, transform.position);
+            hit = Physics2D.Raycast(transform.position, laserDir, 100f, 1 << 6);
+
+            if (hit)
+            {
+                if (hit.transform.CompareTag("Obstacle"))
+                {
+                    SpawnLaser();
+                    Debug.Log("방어벽");
+                }
+                else if (hit.transform.CompareTag("Enemy"))
+                {
+                    hit.transform.GetComponent<EnemyHp>().GetDamage(power);
+                    Debug.Log("적들");
+                }
+
+                Debug.Log(hit.transform.gameObject.name);
+            }
+            else
+            {
+                line.SetPosition(1, laserDir * 100);
+                Debug.Log("아무것도 안맞음");
+            }
+
+
+            laserHit = false;   
+        }
+        
+    }
+    
 }

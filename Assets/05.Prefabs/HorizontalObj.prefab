@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1510563070929338207}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HorizontalObj
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7858618774535818813}
   - component: {fileID: 4138894815885204820}
   - component: {fileID: 7004304244321023925}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HorizontalObstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

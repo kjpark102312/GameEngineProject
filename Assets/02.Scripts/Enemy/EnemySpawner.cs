@@ -11,7 +11,6 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject enemyPrefabs;
 
-
     public List<GameObject> enemyList;
     private void Start()
     {

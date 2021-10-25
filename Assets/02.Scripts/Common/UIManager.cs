@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private Text waveText;
+
+    private int currentWaveIndex;
+
+    
+
     void Start()
     {
-        
+        currentWaveIndex = GameManager.Instance.currentWaveIndex;    
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        WaveStart();
+    }
+
+    void WaveStart()
+    {
+        waveText.text = $"WAVE {currentWaveIndex}";
     }
 
     

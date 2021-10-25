@@ -48,7 +48,7 @@ public class LaserSpawner : MonoBehaviour
 
                     if (hit.transform.CompareTag("TowerPos"))
                     {
-                        Instantiate(laserTower, hit.transform.position, Quaternion.identity);
+                        Instantiate(laserTower, hit.transform.position, LaserTowerRotate());
                         hit.transform.gameObject.SetActive(false);
                         LaserDir(hit);
                     }
@@ -68,19 +68,44 @@ public class LaserSpawner : MonoBehaviour
             case "Top":
             hit2D = Physics2D.Raycast(transform.position, transform.up* -1, 100f);
             laserDir = transform.up * -1;
-            break;
+                Debug.Log("설치");
+                break;
             case "Bottom":
             hit2D = Physics2D.Raycast(transform.position, transform.up, 100f);
             laserDir = transform.up;
-            break;
+                Debug.Log("설치");
+                break;
             case "Right":
-            hit2D = Physics2D.Raycast(transform.position, transform.right * -1, 100f);    
+            hit2D = Physics2D.Raycast(transform.position, transform.right * -1, 100f);
             laserDir = transform.right * -1;
-            break;
+                Debug.Log("설치");
+                break;
             case "Left":
-            hit2D = Physics2D.Raycast(transform.position, transform.right, 100f); 
-            laserDir = transform.right;   
-            break;
+            hit2D = Physics2D.Raycast(transform.position, transform.right, 100f);
+            laserDir = transform.right;
+                Debug.Log("설치");
+                break;
+        }
+    }
+
+    public Quaternion LaserTowerRotate()
+    {
+        switch (hit.transform.parent.name)
+        {
+            case "Top":
+                Debug.Log("설치");
+                return laserTower.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
+            case "Bottom":
+                Debug.Log("설치");
+                return laserTower.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            case "Right":
+                Debug.Log("설치");
+                return laserTower.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+            case "Left":
+                Debug.Log("설치");
+                return laserTower.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
+            default:
+                return laserTower.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
     }
 }
