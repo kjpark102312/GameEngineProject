@@ -5,11 +5,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int gold = 1000;
-    public int currentWaveIndex = 1;
+    public int currentWaveIndex = 0;
 
     public const float Max_Time = 100;
     public float leftTime;
 
+    public int maxHp = 15;
+    public int currentHp = 15;
+
+    public int towerBulidCount = 3;
 
     private static GameManager instance = null;
     public static GameManager Instance

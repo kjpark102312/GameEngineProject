@@ -9,9 +9,13 @@ public class EnemySpawner : MonoBehaviour
 {
     private Wave currentWave;
 
-    public GameObject enemyPrefabs;
-
     public List<GameObject> enemyList;
+
+
+    private int allEnemyCount = 0;
+    private int spawnCSEnemyCount = 0;
+    private int spawnTSEnemyCount = 0;
+    private int spawnSSEnemyCount = 0;
     private void Start()
     {
         StartWave(currentWave);
@@ -21,23 +25,60 @@ public class EnemySpawner : MonoBehaviour
     {
         currentWave = wave;
 
-        StartCoroutine(EnemySpawn());
-        
+        allEnemyCount = 0;
+
+        StartCoroutine(CSEnemySpawn());
+        StartCoroutine(TSEnemySpawn());
+        StartCoroutine(SSEnemySpawn());
     }
 
-    public IEnumerator EnemySpawn()
+    public IEnumerator CSEnemySpawn()
+    {
+        while (allEnemyCount < currentWave.maxEnemyCount)
+        {
+            Instantiate(currentWave.enemyPrefabs[0], transform.position, Quaternion.identity);
+
+
+            yield return new WaitForSeconds(currentWave.CSspawnTime);
+
+            spawnCSEnemyCount++;
+            allEnemyCount++;
+
+            if (spawnCSEnemyCount % currentWave.CSwaitEnemyCount == 0)
+            {
+                yield return new WaitForSeconds(currentWave.waitTime);
+            }
+        }
+    }
+    public IEnumerator TSEnemySpawn()
+    {
+        if (currentWave.enemyPrefabs[1] != null)
+        {
+            while (allEnemyCount < currentWave.maxEnemyCount)
+            {
+                yield return new WaitForSeconds(currentWave.TSspawnTime);
+
+                Instantiate(currentWave.enemyPrefabs[1], transform.position, Quaternion.identity);
+
+                spawnTSEnemyCount++;
+                allEnemyCount++;
+            }
+        }
+    }
+    public IEnumerator SSEnemySpawn()
     {
 
-        int spawnEnemyCount = 0;
-        while (spawnEnemyCount < currentWave.maxEnemyCount)
+        if(currentWave.enemyPrefabs[2] != null)
         {
-            Instantiate(enemyPrefabs, transform.position, Quaternion.identity);
+            while (allEnemyCount < currentWave.maxEnemyCount)
+            {
+                yield return new WaitForSeconds(currentWave.SSspawnTime);
+                
+                Instantiate(currentWave.enemyPrefabs[2], transform.position, Quaternion.identity);
 
-            enemyList.Add(enemyPrefabs);
-
-            yield return new WaitForSeconds(currentWave.spawnTime);
-
-            spawnEnemyCount++;
+                spawnSSEnemyCount++;
+                allEnemyCount++;
+            }
         }
     }
 }

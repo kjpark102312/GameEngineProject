@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - TowerPos
   - Enemy
+  - EndPoint
   layers:
   - Default
   - TransparentFX

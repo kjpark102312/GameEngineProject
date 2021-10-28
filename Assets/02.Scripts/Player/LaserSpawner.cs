@@ -11,6 +11,8 @@ public class LaserSpawner : MonoBehaviour
     private GameObject laserTower;
     private int laserTowerCost = 100;
 
+    public GameObject laserBulidTr;
+
     private RaycastHit2D hit;
 
     bool isOnPanel;
@@ -33,7 +35,7 @@ public class LaserSpawner : MonoBehaviour
 
     public void BuyLaserTower()
     {
-        if (GameManager.Instance.gold > laserTowerCost)
+        if (GameManager.Instance.gold > laserTowerCost && GameManager.Instance.towerBulidCount > 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -48,9 +50,11 @@ public class LaserSpawner : MonoBehaviour
 
                     if (hit.transform.CompareTag("TowerPos"))
                     {
-                        Instantiate(laserTower, hit.transform.position, LaserTowerRotate());
+                        GameObject tower =  Instantiate(laserTower, hit.transform.position, LaserTowerRotate());
+                        tower.transform.parent = laserBulidTr.transform;
                         hit.transform.gameObject.SetActive(false);
                         LaserDir(hit);
+                        GameManager.Instance.towerBulidCount--;
                     }
                 }
             }

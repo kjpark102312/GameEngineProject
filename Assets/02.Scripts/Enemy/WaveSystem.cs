@@ -12,13 +12,14 @@ public class WaveSystem : MonoBehaviour
 
     private void Start()
     {
-        StartWave();
+        //StartWave();
     }
 
-    void StartWave()
+    public void StartWave()
     {
-        if(enemySpawner.enemyList.Count == 0 && currentWave < waves.Length -1)
+        if(currentWave < waves.Length -1)
         {
+            GameManager.Instance.currentWaveIndex++;
             currentWave++;
 
             enemySpawner.StartWave(waves[currentWave]);
@@ -31,7 +32,13 @@ public class WaveSystem : MonoBehaviour
 [System.Serializable]
 public struct Wave
 {
-    public float spawnTime;
+    public float waitTime;
+    public float CSspawnTime;
+    public float TSspawnTime;
+    public float SSspawnTime;
+    public int CSwaitEnemyCount;
+    public int TSwaitEnemyCount;
+    public int SSwaitEnemyCount;
     public int maxEnemyCount;
     public GameObject[] enemyPrefabs;
 }

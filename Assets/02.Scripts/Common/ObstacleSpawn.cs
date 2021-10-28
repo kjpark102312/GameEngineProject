@@ -14,7 +14,12 @@ public class ObstacleSpawn : MonoBehaviour
     [SerializeField]
     private LaserSpawner laserSpawner;
 
+    public List<LaserTower> laserTowers = new List<LaserTower>();
+    public LaserTower[] laserTower;
+
     private int obstacleCost = 50;
+
+    public GameObject towerParent;
 
     void Update()
     {
@@ -25,16 +30,16 @@ public class ObstacleSpawn : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if(!EventSystem.current.IsPointerOverGameObject())
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
 
                 RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
 
-                if(hit.collider == null) return;
-                    
-                if (hit.transform.CompareTag("Point") && points.Count == 0) 
+                if (hit.collider == null) return;
+
+                if (hit.transform.CompareTag("Point") && points.Count == 0)
                 {
                     points.Add(hit.transform);
                 }
@@ -42,19 +47,21 @@ public class ObstacleSpawn : MonoBehaviour
                 {
                     points.Add(hit.transform);
 
-                    Debug.Log("�ι�° Ʈ������");
-
                     obstacleSpawner(points[0], points[1]);
+                    laserTower = towerParent.GetComponentsInChildren<LaserTower>();
+
+                    //for(int i = 0; i < laserTower.Length; i++)
+                    //{
+                    //    laserTower[i].CheckLaserState();
+                    //}
                 }
-                Debug.Log("�Ȱ��� ���� ��ֹ��� ��ġ�� �� �����ϴ�!!!");
             }
         }
-
     }
 
     void obstacleSpawner(Transform firstPointTr, Transform lastPointTr)
     {
-        if(GameManager.Instance.gold > obstacleCost)
+        if (GameManager.Instance.gold > obstacleCost)
         {
             Points firstPoint = firstPointTr.GetComponent<Points>();
             Points secondPoint = lastPointTr.GetComponent<Points>();
@@ -69,12 +76,32 @@ public class ObstacleSpawn : MonoBehaviour
 
             Vector3 obstacleDir = firstPointTr.position - lastPointTr.position;
 
-            Instantiate(horizontalObj, firstPointTr.position, ObstacleRotate(obstacleDir));
+            GameObject Obstacle = Instantiate(horizontalObj, firstPointTr.position, Quaternion.identity);
+            Debug.Log(GetAngel(obstacleDir.normalized, Obstacle.transform.right));
 
-            points.RemoveAt(0);
-            points.RemoveAt(0);
+            if (GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 90 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 0 
+                || GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 140 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 130)
+            {
+                Debug.Log(GetAngel(obstacleDir, horizontalObj.transform.forward));
+                Destroy(Obstacle);
+                Instantiate(horizontalObj, firstPointTr.position, Obstaclerotate(obstacleDir));
 
-            GameManager.Instance.gold -= obstacleCost;
+                points.RemoveAt(0);
+                points.RemoveAt(0);
+
+                GameManager.Instance.gold -= obstacleCost;
+                return;
+            }
+            else
+            {
+                Destroy(Obstacle);
+                Instantiate(verticalObj, firstPointTr.position, Obstaclerotate(obstacleDir));
+
+                points.RemoveAt(0);
+                points.RemoveAt(0);
+
+                GameManager.Instance.gold -= obstacleCost;
+            }
         }
         else
         {
@@ -82,9 +109,19 @@ public class ObstacleSpawn : MonoBehaviour
         }
     }
 
-    public Quaternion ObstacleRotate(Vector3 dir)
+    public float GetAngel(Vector3 start, Vector3 end)
+    {
+        float dot = Vector3.Dot(start, end);
+        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+        return angle;
+    }
+
+    public Quaternion Obstaclerotate(Vector3 dir)
     {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (angle > 0 && angle < 50) angle = 45;
+        else if (angle < 0 && angle > -50) angle = -45;
+
         return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }
