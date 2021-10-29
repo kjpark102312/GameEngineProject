@@ -39,56 +39,29 @@ public class LaserSpawner : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (!EventSystem.current.IsPointerOverGameObject())
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
+
+                hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
+
+                if(hit.collider == null) return;
+
+                if (hit.transform.CompareTag("TowerPos"))
                 {
-                    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
+                    GameObject tower =  Instantiate(laserTower, hit.transform.position, LaserTowerRotate());
+                    tower.transform.parent = laserBulidTr.transform;
+                    Debug.Log(hit.transform.gameObject.transform.right);
+                    hit.transform.gameObject.SetActive(false);
+                    
+                    GameManager.Instance.towerBulidCount--;
 
-                    hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
-
-                    if(hit.collider == null) return;
-
-                    if (hit.transform.CompareTag("TowerPos"))
-                    {
-                        GameObject tower =  Instantiate(laserTower, hit.transform.position, LaserTowerRotate());
-                        tower.transform.parent = laserBulidTr.transform;
-                        hit.transform.gameObject.SetActive(false);
-                        LaserDir(hit);
-                        GameManager.Instance.towerBulidCount--;
-                    }
+                    laserDir = hit.transform.gameObject.transform.up;
                 }
             }
         }
         else
         {
             return;
-        }
-    }
-
-    public void LaserDir(RaycastHit2D hit2D)
-    {
-        switch(hit.transform.parent.name)
-        {
-            case "Top":
-            hit2D = Physics2D.Raycast(transform.position, transform.up* -1, 100f);
-            laserDir = transform.up * -1;
-                Debug.Log("설치");
-                break;
-            case "Bottom":
-            hit2D = Physics2D.Raycast(transform.position, transform.up, 100f);
-            laserDir = transform.up;
-                Debug.Log("설치");
-                break;
-            case "Right":
-            hit2D = Physics2D.Raycast(transform.position, transform.right * -1, 100f);
-            laserDir = transform.right * -1;
-                Debug.Log("설치");
-                break;
-            case "Left":
-            hit2D = Physics2D.Raycast(transform.position, transform.right, 100f);
-            laserDir = transform.right;
-                Debug.Log("설치");
-                break;
         }
     }
 

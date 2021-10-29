@@ -21,7 +21,7 @@ public class FloatingText : MonoBehaviour
     }
     private void Update()
     {
-        Floating();
+        //Floating();
     }
 
     private void Floating()
@@ -36,7 +36,7 @@ public class FloatingText : MonoBehaviour
     private void DestroyObject()
     {
         Debug.Log("Asdad");
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);
     }
 
     

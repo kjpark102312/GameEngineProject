@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 1000
-  floatingText: {fileID: 1248831080440729013, guid: 08f6b54092abad1429af62c53a2b2dc9, type: 3}
+  floatingText: {fileID: 8657756623715974104, guid: b45ecbde30c04534abdc709b2d2f5039, type: 3}
 --- !u!114 &-1204668334974946851
 MonoBehaviour:
   m_ObjectHideFlags: 0
