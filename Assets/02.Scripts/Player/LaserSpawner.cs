@@ -24,8 +24,7 @@ public class LaserSpawner : MonoBehaviour
         if (laserTrPanel.activeSelf == true) laserTrPanel.SetActive(false);
         else if (laserTrPanel.activeSelf == false) laserTrPanel.SetActive(true);
 
-        //bool s = laserTrPanel.activeSelf ? true : false;
-        //laserTrPanel.SetActive(s);
+        
     }
 
     private void Update() 

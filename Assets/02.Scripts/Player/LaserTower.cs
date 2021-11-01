@@ -26,41 +26,8 @@ public class LaserTower : MonoBehaviour
 
     private float coolTime = 0.5f;
     private float realTime = 0f;
-    public enum LaserHitState
-    {
-        hitObstacle,
-        hitEnemy,
-        hitAnything
-    }
 
-    public LaserHitState hitState = LaserHitState.hitAnything;
-
-    public void CheckLaserState()
-    {
-        
-        if (hit)
-        {
-            if (hit.transform.CompareTag("Obstacle")) ChangeLaserState(LaserHitState.hitObstacle);
-            Debug.Log("옵스타클 맞아버리기");
-        }
-        else
-        {
-            ChangeLaserState(LaserHitState.hitAnything);
-            Debug.Log("아무데도 안맞아버리기");
-        }
-    }
-
-    private void ChangeLaserState(LaserHitState hitState)
-    {
-        switch(hitState)
-        {
-            case LaserHitState.hitObstacle:
-                SpawnLaser();
-                break;
-            case LaserHitState.hitAnything:
-                break;
-        }
-    }
+    public int rayCount;
 
     private void Awake() 
     {
@@ -70,30 +37,43 @@ public class LaserTower : MonoBehaviour
     private void Start() 
     {
         laserDir = laserSpawner.laserDir;
-        CheckLaserState();
+        
     }
 
     void Update()
     {
-        HitAnything();
-        EnemyHit();
-        ReflectLaser();
-        Debug.DrawRay(transform.position, laserDir * 10, Color.green);
+        //HitAnything();
+        //EnemyHit();
+        //ReflectLaser();
+        //Debug.DrawRay(transform.position, laserDir * 10, Color.green);
+        CastRay(transform.position, laserDir);
+        Debug.DrawRay(transform.position, laserDir);
     }
 
-    private void SpawnLaser()
+    void CastRay(Vector2 position, Vector2 dir)
     {
-        laserCount = 1;
-        Vector2 bounceVector = Vector2.Reflect(laserDir, hit.normal);
-        Debug.DrawRay(hit.point, Vector2.Reflect(laserDir, hit.normal), Color.red);
-
-        hitObstacle = Physics2D.Raycast(hit.point, bounceVector, 100f);
-
-        laserCount++;
-        line.SetPosition(1, hit.point);
-        line.SetPosition(laserCount, hit.point + Vector2.Reflect(laserDir, hit.normal) * 10f);
-
-        Debug.Log(line.positionCount);
+        line.SetPosition(0, transform.position);
+        for (int i = 0; i < rayCount; i++ )
+        {
+            RaycastHit2D hit = Physics2D.Raycast(position, dir, 10f , 1<<6);
+            if(hit)
+            {
+                if (hit.transform.CompareTag("Obstacle"))
+                {
+                    position = hit.point;
+                    dir = Vector3.Reflect(dir, hit.normal);
+                    Debug.DrawRay(position, dir, Color.green);
+                    Debug.DrawRay(hit.point, Vector2.Reflect(laserDir, hit.normal), Color.red);
+                    line.SetPosition(i + 1, hit.point);
+                }
+            }
+            else
+            {
+                line.SetPosition(i+1, transform.position + laserDir * 10f);
+                //Debug.DrawRay(position, dir * 10, Color.red);
+                break;
+            }
+        }
     }
     
     private Vector2 CheckBounceLaser(Vector2 inDirection)
@@ -159,7 +139,8 @@ public class LaserTower : MonoBehaviour
         {
             if(hit.transform.CompareTag("Obstacle"))
             {
-                Debug.Log("asdasd");
+                Debug.LogError("??");
+
                 laserCount = 2;
                 line.positionCount = 3;
                 line.SetPosition(1, hit.point);
@@ -182,7 +163,7 @@ public class LaserTower : MonoBehaviour
 
     private void HitEnemyAndObstacle()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(hit.point, Vector2.Reflect(transform.position + laserDir, hit.normal), 100f, 1 << 6);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, laserDir, 100f, 1 << 6);
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -191,14 +172,16 @@ public class LaserTower : MonoBehaviour
             {
                 if (bounceHit.transform.CompareTag("Obstacle"))
                 {
+                    Debug.LogError("??");
                     laserCount = 2;
                     line.positionCount = 3;
-                    line.SetPosition(1, hit.point);
-                    line.SetPosition(2, hit.point + Vector2.Reflect(laserDir, hit.normal) * 10f);
+                    line.SetPosition(1, bounceHit.point);
+                    line.SetPosition(2, bounceHit.point + Vector2.Reflect(laserDir, hit.normal) * 10f);
                     isHitObstacle = true;
                 }
                 else if(!isHitObstacle)
                 {
+                    Debug.Log("적맞음");
                     line.SetPosition(1, transform.position + laserDir * 100);
                 }
             }

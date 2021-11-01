@@ -30,31 +30,28 @@ public class ObstacleSpawn : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
+
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
+
+            if (hit.collider == null) return;
+
+            if (hit.transform.CompareTag("Point") && points.Count == 0)
             {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
+                points.Add(hit.transform);
+            }
+            else if (hit.transform.CompareTag("Point"))
+            {
+                points.Add(hit.transform);
 
-                RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
+                obstacleSpawner(points[0], points[1]);
+                laserTower = towerParent.GetComponentsInChildren<LaserTower>();
 
-                if (hit.collider == null) return;
-
-                if (hit.transform.CompareTag("Point") && points.Count == 0)
-                {
-                    points.Add(hit.transform);
-                }
-                else if (hit.transform.CompareTag("Point"))
-                {
-                    points.Add(hit.transform);
-
-                    obstacleSpawner(points[0], points[1]);
-                    laserTower = towerParent.GetComponentsInChildren<LaserTower>();
-
-                    //for(int i = 0; i < laserTower.Length; i++)
-                    //{
-                    //    laserTower[i].CheckLaserState();
-                    //}
-                }
+                //for(int i = 0; i < laserTower.Length; i++)
+                //{
+                //    laserTower[i].CheckLaserState();
+                //}
             }
         }
     }
@@ -79,7 +76,7 @@ public class ObstacleSpawn : MonoBehaviour
             GameObject Obstacle = Instantiate(horizontalObj, firstPointTr.position, Quaternion.identity);
             Debug.Log(GetAngel(obstacleDir.normalized, Obstacle.transform.right));
 
-            if (GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 90 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 0 
+            if (GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 90 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 0
                 || GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 140 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 130)
             {
                 Debug.Log(GetAngel(obstacleDir, horizontalObj.transform.forward));
@@ -121,6 +118,8 @@ public class ObstacleSpawn : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         if (angle > 0 && angle < 50) angle = 45;
         else if (angle < 0 && angle > -50) angle = -45;
+        else if (angle < -135 && angle > -140) angle = -135;
+        else angle = -225;
 
         return Quaternion.AngleAxis(angle, Vector3.forward);
     }
