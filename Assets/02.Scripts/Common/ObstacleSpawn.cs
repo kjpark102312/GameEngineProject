@@ -55,6 +55,10 @@ public class ObstacleSpawn : MonoBehaviour
             }
         }
     }
+    void CostCalculation()
+    {
+        obstacleCost = (int)(((obstacleCost / 2) + obstacleCost)*0.1f)*10;
+    }
 
     void obstacleSpawner(Transform firstPointTr, Transform lastPointTr)
     {
@@ -73,6 +77,8 @@ public class ObstacleSpawn : MonoBehaviour
 
             Vector3 obstacleDir = firstPointTr.position - lastPointTr.position;
 
+            
+
             GameObject Obstacle = Instantiate(horizontalObj, firstPointTr.position, Quaternion.identity);
             Debug.Log(GetAngel(obstacleDir.normalized, Obstacle.transform.right));
 
@@ -87,6 +93,9 @@ public class ObstacleSpawn : MonoBehaviour
                 points.RemoveAt(0);
 
                 GameManager.Instance.gold -= obstacleCost;
+                CostCalculation();
+
+                Debug.Log(obstacleDir.sqrMagnitude);
                 return;
             }
             else
@@ -97,6 +106,7 @@ public class ObstacleSpawn : MonoBehaviour
                 points.RemoveAt(0);
                 points.RemoveAt(0);
 
+                Debug.Log(obstacleDir.sqrMagnitude);
                 GameManager.Instance.gold -= obstacleCost;
             }
         }

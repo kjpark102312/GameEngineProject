@@ -6,8 +6,8 @@ using TMPro;
 
 public class EnemyHp : MonoBehaviour, IDamageable
 {
-
-    public float hp = 5;
+    public float maxHP = 1000;
+    public float currentHP = 1000;
 
     private float coolTime = 0.8f;
     private float baseTime = 0;
@@ -16,12 +16,12 @@ public class EnemyHp : MonoBehaviour, IDamageable
 
     public void GetDamage(float power)
     {
-        hp -= power;
+        currentHP -= power;
         //FloatingText(power);
 
         Debug.Log("데미지 받는중");
 
-        if (hp <= 0)
+        if (currentHP <= 0)
         {
             Destroy(gameObject);
         }

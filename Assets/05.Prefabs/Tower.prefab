@@ -77,6 +77,11 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   - {x: 0, y: 0, z: 1}
   - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.05
@@ -232,4 +237,5 @@ MonoBehaviour:
   line: {fileID: 428506185682991934}
   laserSpawner: {fileID: 0}
   power: 100
+  obstacleCount: 0
   rayCount: 5

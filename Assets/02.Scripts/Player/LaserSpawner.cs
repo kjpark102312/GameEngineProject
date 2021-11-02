@@ -32,6 +32,10 @@ public class LaserSpawner : MonoBehaviour
         BuyLaserTower();
     }
 
+    void CostCalculation()
+    {
+        laserTowerCost = (int)(((laserTowerCost / 2) + laserTowerCost) * 0.1f) * 10;
+    }
     public void BuyLaserTower()
     {
         if (GameManager.Instance.gold > laserTowerCost && GameManager.Instance.towerBulidCount > 0)
@@ -53,6 +57,7 @@ public class LaserSpawner : MonoBehaviour
                     hit.transform.gameObject.SetActive(false);
                     
                     GameManager.Instance.towerBulidCount--;
+                    CostCalculation();
 
                     laserDir = hit.transform.gameObject.transform.up;
                 }

@@ -11,6 +11,11 @@ public class EnemySpawner : MonoBehaviour
 
     public List<GameObject> enemyList;
 
+    [SerializeField]
+    private GameObject enemyHPSlider;
+    [SerializeField]
+    private Transform canvasTr;
+
 
     private int allEnemyCount = 0;
     private int spawnCSEnemyCount = 0;
@@ -36,8 +41,9 @@ public class EnemySpawner : MonoBehaviour
     {
         while (allEnemyCount < currentWave.maxEnemyCount)
         {
-            Instantiate(currentWave.enemyPrefabs[0], transform.position, Quaternion.identity);
+            GameObject clone = Instantiate(currentWave.enemyPrefabs[0], transform.position, Quaternion.identity);
 
+            SpawnEnemyHPBar(clone);
 
             yield return new WaitForSeconds(currentWave.CSspawnTime);
 
@@ -58,8 +64,9 @@ public class EnemySpawner : MonoBehaviour
             {
                 yield return new WaitForSeconds(currentWave.TSspawnTime);
 
-                Instantiate(currentWave.enemyPrefabs[1], transform.position, Quaternion.identity);
+                GameObject clone = Instantiate(currentWave.enemyPrefabs[1], transform.position, Quaternion.identity);
 
+                SpawnEnemyHPBar(clone);
                 spawnTSEnemyCount++;
                 allEnemyCount++;
             }
@@ -73,13 +80,25 @@ public class EnemySpawner : MonoBehaviour
             while (allEnemyCount < currentWave.maxEnemyCount)
             {
                 yield return new WaitForSeconds(currentWave.SSspawnTime);
-                
-                Instantiate(currentWave.enemyPrefabs[2], transform.position, Quaternion.identity);
 
+                GameObject clone = Instantiate(currentWave.enemyPrefabs[2], transform.position, Quaternion.identity);
+                SpawnEnemyHPBar(clone);
                 spawnSSEnemyCount++;
                 allEnemyCount++;
             }
         }
+    }
+
+
+    public void SpawnEnemyHPBar(GameObject enemy)
+    {
+        GameObject slider = Instantiate(enemyHPSlider);
+
+        slider.transform.SetParent(canvasTr);
+        slider.transform.localScale = Vector3.one;
+
+        slider.GetComponent<HPBarSetter>().Setup(enemy.transform);
+        slider.GetComponent<EnemyHPSlider>().Setup(enemy.GetComponent<EnemyHp>());
     }
 }
 
