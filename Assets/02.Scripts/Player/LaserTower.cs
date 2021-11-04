@@ -20,7 +20,6 @@ public class LaserTower : MonoBehaviour
     private bool isHitObstacle = false;
 
     public int obstacleCount;
-
     public int rayCount;
 
     private void Awake() 
@@ -45,8 +44,7 @@ public class LaserTower : MonoBehaviour
         line.SetPosition(0, transform.position);
         for (int i = 0; i < rayCount; i++ )
         {
-            RaycastHit2D hit = Physics2D.Raycast(position, dir, 10f , 1<<6);
-            Debug.DrawRay(position, dir, Color.gray);
+            RaycastHit2D hit = Physics2D.Raycast(position, dir, 10f , 1 << 6);
             if (hit)
             {
                 if (hit.transform.CompareTag("Obstacle"))
@@ -59,7 +57,6 @@ public class LaserTower : MonoBehaviour
             else
             {
                 line.SetPosition(i+1, position + dir * 10f);
-                Debug.Log(i);
             }
         }
     }
@@ -67,7 +64,7 @@ public class LaserTower : MonoBehaviour
     {
         for (int i = 0; i < rayCount; i++)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(position, dir, 10f, 1 << 6);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(position, dir, 10f, 1 << 6 | 1 << 7);
             Debug.DrawRay(position, dir, Color.gray);
             for (int j = 0; j < hits.Length; j++)
             {
@@ -85,77 +82,6 @@ public class LaserTower : MonoBehaviour
                     {
                         hit.transform.GetComponent<EnemyHp>().GetDamage(power * Time.deltaTime);
                     }
-                }
-            }
-        }
-    }
-
-    private Vector2 CheckBounceLaser(Vector2 inDirection)
-    {
-        Vector2 inNormal = Vector3.Reflect(inDirection, hit.normal);
-
-        return inNormal;
-    }
-    
-    private void ReflectLaser()
-    {
-        if(hit)
-        {
-            if (hit.transform.CompareTag("Obstacle"))
-            {
-                RaycastHit2D[] hits = Physics2D.RaycastAll(hit.point, Vector3.Reflect(laserDir, hit.normal), 100f, 1 << 6);
-
-                for (int j = 0; j < hits.Length; j++)
-                {
-                    RaycastHit2D bounceHit = hits[j];
-                    if (bounceHit)
-                    {
-                        if (bounceHit.transform.CompareTag("Enemy"))
-                        {
-                            bounceHit.transform.GetComponent<EnemyHp>().GetDamage(power * Time.deltaTime);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void HitAnything()
-    {
-        hit = Physics2D.Raycast(transform.position, laserDir, 100f, 1 << 6);
-
-        line.SetPosition(0, transform.position);
-
-        if(hit)
-        {
-            if(hit.transform.CompareTag("Obstacle"))
-            {
-                Debug.LogError("??");
-
-                Debug.DrawRay(hit.point, Vector2.Reflect(laserDir, hit.normal), Color.green);
-
-                isHitObstacle = true;
-            }
-            else if (hit.transform.CompareTag("Enemy") && !isHitObstacle)
-            {
-                HitEnemyAndObstacle();
-            }
-        }
-    }
-
-    private void HitEnemyAndObstacle()
-    {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, laserDir, 100f, 1 << 6);
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            RaycastHit2D bounceHit = hits[i];
-            if (bounceHit)
-            {
-                if (bounceHit.transform.CompareTag("Obstacle"))
-                {
-                    Debug.LogError("??");
-                  
                 }
             }
         }

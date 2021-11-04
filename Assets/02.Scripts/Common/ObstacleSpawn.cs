@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class ObstacleSpawn : MonoBehaviour
@@ -19,8 +20,15 @@ public class ObstacleSpawn : MonoBehaviour
 
     private int obstacleCost = 50;
 
+    [SerializeField]
+    private Text obstacleCostText;
+
     public GameObject towerParent;
 
+    private void Start()
+    {
+        obstacleCostText.text = $"{obstacleCost}";
+    }
     void Update()
     {
         ClickPoint();
@@ -57,6 +65,8 @@ public class ObstacleSpawn : MonoBehaviour
     }
     void CostCalculation()
     {
+        obstacleCostText.text = $"{obstacleCost}";
+        GameManager.Instance.gold -= obstacleCost;
         obstacleCost = (int)(((obstacleCost / 2) + obstacleCost)*0.1f)*10;
     }
 
@@ -92,7 +102,6 @@ public class ObstacleSpawn : MonoBehaviour
                 points.RemoveAt(0);
                 points.RemoveAt(0);
 
-                GameManager.Instance.gold -= obstacleCost;
                 CostCalculation();
 
                 Debug.Log(obstacleDir.sqrMagnitude);

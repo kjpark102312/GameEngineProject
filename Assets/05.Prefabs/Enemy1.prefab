@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1204668334974946851}
   - component: {fileID: 6138859593038206654}
   - component: {fileID: 511920021906931786}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Enemy1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac635142717db3f418c47184bf92ad63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1000
+  maxHP: 1000
+  currentHP: 1000
   floatingText: {fileID: 8657756623715974104, guid: b45ecbde30c04534abdc709b2d2f5039, type: 3}
 --- !u!114 &-1204668334974946851
 MonoBehaviour:
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wayPoints: []
-  moveSpeed: 2
+  moveSpeed: 1
   nextIndex: 0
 --- !u!58 &6138859593038206654
 CircleCollider2D:

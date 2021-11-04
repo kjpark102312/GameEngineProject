@@ -9,6 +9,7 @@ TagManager:
   - TowerPos
   - Enemy
   - EndPoint
+  - Tile
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - 
   - Water
   - UI
-  - MirrorAndEnemy
-  - 
+  - Mirror
+  - Enemy
   - 
   - 
   - 

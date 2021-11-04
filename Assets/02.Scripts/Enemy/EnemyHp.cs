@@ -17,28 +17,12 @@ public class EnemyHp : MonoBehaviour, IDamageable
     public void GetDamage(float power)
     {
         currentHP -= power;
-        //FloatingText(power);
 
         Debug.Log("데미지 받는중");
 
         if (currentHP <= 0)
         {
             Destroy(gameObject);
-        }
-    }
-
-    public void FloatingText(float power)
-    {
-        baseTime += Time.deltaTime;
-
-        if (coolTime <= baseTime)
-        {
-            GameObject Canvas = Instantiate(floatingText);
-            GameObject text = Canvas.GetComponentInChildren<GameObject>();
-            text.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.2f, 0));
-            text.transform.position = transform.position + new Vector3(0f, 3f);
-            text.GetComponent<FloatingText>().power = power;
-            baseTime = 0;
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class LaserSpawner : MonoBehaviour
@@ -11,11 +12,12 @@ public class LaserSpawner : MonoBehaviour
     private GameObject laserTower;
     private int laserTowerCost = 100;
 
+    [SerializeField]
+    private Text laserTowerCostText;
+
     public GameObject laserBulidTr;
 
     private RaycastHit2D hit;
-
-    bool isOnPanel;
 
     public Vector2 laserDir;
 
@@ -26,6 +28,10 @@ public class LaserSpawner : MonoBehaviour
 
         
     }
+    private void Start()
+    {
+        laserTowerCostText.text = $"{laserTowerCost}";
+    }
 
     private void Update() 
     {
@@ -34,6 +40,8 @@ public class LaserSpawner : MonoBehaviour
 
     void CostCalculation()
     {
+        laserTowerCostText.text = $"{laserTowerCost}";
+        GameManager.Instance.gold -= laserTowerCost;
         laserTowerCost = (int)(((laserTowerCost / 2) + laserTowerCost) * 0.1f) * 10;
     }
     public void BuyLaserTower()
