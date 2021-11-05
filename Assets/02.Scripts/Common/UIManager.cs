@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text towerCountText;
 
+    [SerializeField]
+    private Text isBuildTowerText;
     
 
     void Update()
@@ -95,6 +97,14 @@ public class UIManager : MonoBehaviour
             });
             
         }
+    }
+
+    public void IsBuildTower()
+    {
+        isBuildTowerText.DOFade(0.8f, 0.2f).OnComplete(() =>
+        {
+            isBuildTowerText.DOFade(0f, 0.2f);
+        });
     }
 
     void Gold()

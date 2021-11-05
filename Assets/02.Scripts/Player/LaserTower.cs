@@ -45,6 +45,7 @@ public class LaserTower : MonoBehaviour
         for (int i = 0; i < rayCount; i++ )
         {
             RaycastHit2D hit = Physics2D.Raycast(position, dir, 10f , 1 << 6);
+            Debug.DrawRay(position, dir, Color.green);
             if (hit)
             {
                 if (hit.transform.CompareTag("Obstacle"))
@@ -65,10 +66,9 @@ public class LaserTower : MonoBehaviour
         for (int i = 0; i < rayCount; i++)
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(position, dir, 10f, 1 << 6 | 1 << 7);
-            Debug.DrawRay(position, dir, Color.gray);
+            
             for (int j = 0; j < hits.Length; j++)
             {
-                Debug.Log(hits.Length);
                 RaycastHit2D hit = hits[j];
                 if (hit)
                 {

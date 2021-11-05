@@ -7,16 +7,16 @@ using UnityEngine.EventSystems;
 public class ObstacleSpawn : MonoBehaviour
 {
 
+
     public GameObject horizontalObj;
     public GameObject verticalObj;
 
     [SerializeField]
     private List<Transform> points;
     [SerializeField]
+    private Transform nearPoint;
+    [SerializeField]
     private LaserSpawner laserSpawner;
-
-    public List<LaserTower> laserTowers = new List<LaserTower>();
-    public LaserTower[] laserTower;
 
     private int obstacleCost = 50;
 
@@ -25,10 +25,22 @@ public class ObstacleSpawn : MonoBehaviour
 
     public GameObject towerParent;
 
+    [SerializeField]
+    public UIManager ui;
+
+    [SerializeField]
+    private GameObject buildPointsParent;
+
+    public Transform[] buildPoints;
+
+    private float shortDis;
+
     private void Start()
     {
         obstacleCostText.text = $"{obstacleCost}";
+        buildPoints = buildPointsParent.gameObject.GetComponentsInChildren<Transform>();
     }
+    
     void Update()
     {
         ClickPoint();
@@ -47,32 +59,54 @@ public class ObstacleSpawn : MonoBehaviour
 
             if (hit.transform.CompareTag("Point") && points.Count == 0)
             {
-                points.Add(hit.transform);
+                points.Add(hit.transform.gameObject.transform);
+                Debug.Log("sadasd");
             }
-            else if (hit.transform.CompareTag("Point"))
+        }   
+        
+        if (points.Count != 0)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
+
+            Debug.LogError(buildPoints.Length);
+            if(hit)
             {
-                points.Add(hit.transform);
+                shortDis = Vector2.Distance(hit.transform.position, buildPoints[0].transform.position);
+                for (int i = 0; i < buildPoints.Length - 1; i++)
+                {
+                    float distance = Vector2.Distance(hit.transform.position, buildPoints[i].position);
 
-                obstacleSpawner(points[0], points[1]);
-                laserTower = towerParent.GetComponentsInChildren<LaserTower>();
+                    if (distance < shortDis)
+                    {
+                        nearPoint = buildPoints[i];
+                        shortDis = distance;
 
-                //for(int i = 0; i < laserTower.Length; i++)
-                //{
-                //    laserTower[i].CheckLaserState();
-                //}
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            points.Add(nearPoint);
+                        }
+                    }
+                }
             }
+            
         }
+        else if(points.Count == 2) obstacleSpawner(points[0], points[1]);
     }
     void CostCalculation()
     {
         obstacleCostText.text = $"{obstacleCost}";
         GameManager.Instance.gold -= obstacleCost;
-        obstacleCost = (int)(((obstacleCost / 2) + obstacleCost)*0.1f)*10;
+        obstacleCost = (int)(((obstacleCost / 2) + obstacleCost) * 0.1f) * 10;
+        obstacleCostText.text = $"{obstacleCost}";
     }
 
     void obstacleSpawner(Transform firstPointTr, Transform lastPointTr)
     {
-        if (GameManager.Instance.gold > obstacleCost)
+        Vector3 obstacleDir = firstPointTr.position - lastPointTr.position;
+        float dis = obstacleDir.sqrMagnitude;
+
+        if (GameManager.Instance.gold > obstacleCost && dis < 2)
         {
             Points firstPoint = firstPointTr.GetComponent<Points>();
             Points secondPoint = lastPointTr.GetComponent<Points>();
@@ -85,42 +119,32 @@ public class ObstacleSpawn : MonoBehaviour
             firstPoint.isBuildObstacle = true;
             secondPoint.isBuildObstacle = true;
 
-            Vector3 obstacleDir = firstPointTr.position - lastPointTr.position;
-
-            
-
             GameObject Obstacle = Instantiate(horizontalObj, firstPointTr.position, Quaternion.identity);
             Debug.Log(GetAngel(obstacleDir.normalized, Obstacle.transform.right));
 
             if (GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 90 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 0
                 || GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 140 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 130)
             {
-                Debug.Log(GetAngel(obstacleDir, horizontalObj.transform.forward));
                 Destroy(Obstacle);
+                Debug.Log(GetAngel(obstacleDir, horizontalObj.transform.forward));
                 Instantiate(horizontalObj, firstPointTr.position, Obstaclerotate(obstacleDir));
-
-                points.RemoveAt(0);
-                points.RemoveAt(0);
-
-                CostCalculation();
-
-                Debug.Log(obstacleDir.sqrMagnitude);
-                return;
             }
             else
             {
                 Destroy(Obstacle);
                 Instantiate(verticalObj, firstPointTr.position, Obstaclerotate(obstacleDir));
-
-                points.RemoveAt(0);
-                points.RemoveAt(0);
-
-                Debug.Log(obstacleDir.sqrMagnitude);
-                GameManager.Instance.gold -= obstacleCost;
             }
+
+            CostCalculation();
+
+            points.RemoveAt(0);
+            points.RemoveAt(0);
         }
         else
         {
+            ui.IsBuildTower();
+            points.RemoveAt(0);
+            points.RemoveAt(0);
             return;
         }
     }
@@ -137,8 +161,6 @@ public class ObstacleSpawn : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         if (angle > 0 && angle < 50) angle = 45;
         else if (angle < 0 && angle > -50) angle = -45;
-        else if (angle < -135 && angle > -140) angle = -135;
-        else angle = -225;
 
         return Quaternion.AngleAxis(angle, Vector3.forward);
     }

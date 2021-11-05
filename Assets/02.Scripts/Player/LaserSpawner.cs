@@ -43,6 +43,7 @@ public class LaserSpawner : MonoBehaviour
         laserTowerCostText.text = $"{laserTowerCost}";
         GameManager.Instance.gold -= laserTowerCost;
         laserTowerCost = (int)(((laserTowerCost / 2) + laserTowerCost) * 0.1f) * 10;
+        laserTowerCostText.text = $"{laserTowerCost}";
     }
     public void BuyLaserTower()
     {
