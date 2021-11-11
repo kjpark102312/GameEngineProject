@@ -17,8 +17,13 @@ public class ObstacleSpawn : MonoBehaviour
     private Transform nearPoint;
     [SerializeField]
     private LaserSpawner laserSpawner;
+    [SerializeField]
+    private GameObject invisibleObstacle;
+
+
 
     private int obstacleCost = 50;
+    private int destroyCost;
 
     [SerializeField]
     private Text obstacleCostText;
@@ -35,20 +40,24 @@ public class ObstacleSpawn : MonoBehaviour
 
     private float shortDis;
 
+    private bool isClickPoint;
+    private bool isOnDestroy;
     private void Start()
     {
         obstacleCostText.text = $"{obstacleCost}";
         buildPoints = buildPointsParent.gameObject.GetComponentsInChildren<Transform>();
     }
-    
+
     void Update()
     {
         ClickPoint();
+        NearPoint();
+        Destroy();
     }
 
     void ClickPoint()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
@@ -60,45 +69,86 @@ public class ObstacleSpawn : MonoBehaviour
             if (hit.transform.CompareTag("Point") && points.Count == 0)
             {
                 points.Add(hit.transform.gameObject.transform);
-                Debug.Log("sadasd");
-            }
-        }   
-        
+                invisibleObstacle.SetActive(true);
+            } 
+        }
+    }
+
+    void NearPoint()
+    {
         if (points.Count != 0)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
+            RaycastHit2D hits = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
 
-            Debug.LogError(buildPoints.Length);
-            if(hit)
+            if (hits)
             {
-                shortDis = Vector2.Distance(hit.transform.position, buildPoints[0].transform.position);
+                shortDis = Vector2.Distance(hits.point, buildPoints[0].transform.position);
+
                 for (int i = 0; i < buildPoints.Length - 1; i++)
                 {
-                    float distance = Vector2.Distance(hit.transform.position, buildPoints[i].position);
+                    float distance = Vector2.Distance(hits.point, buildPoints[i].position);
 
                     if (distance < shortDis)
                     {
                         nearPoint = buildPoints[i];
+                        Debug.DrawLine(nearPoint.position, hits.point);
+                        invisibleObstacle.transform.position = points[0].transform.position;
+                        invisibleObstacle.transform.rotation = Obstaclerotate(points[0].position - nearPoint.position);
                         shortDis = distance;
-
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            points.Add(nearPoint);
-                        }
                     }
                 }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    invisibleObstacle.SetActive(false);
+                    points.Add(nearPoint);
+                    obstacleSpawner(points[0], points[1]);
+                    isClickPoint = false;                                                                            
+                }
             }
-            
         }
-        else if(points.Count == 2) obstacleSpawner(points[0], points[1]);
     }
+
     void CostCalculation()
     {
         obstacleCostText.text = $"{obstacleCost}";
         GameManager.Instance.gold -= obstacleCost;
+        destroyCost = obstacleCost / 2;
         obstacleCost = (int)(((obstacleCost / 2) + obstacleCost) * 0.1f) * 10;
         obstacleCostText.text = $"{obstacleCost}";
+    }
+    
+
+    private void Destroy()
+    {
+        if(isOnDestroy)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
+
+                RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity ,1 << 6);
+
+                Debug.Log(hit.transform.gameObject.name);
+
+                if (hit.collider == null) return;
+
+                if (hit.transform.CompareTag("Obstacle"))
+                {
+                    Debug.Log("ASD");
+                    GameManager.Instance.gold += destroyCost;
+                    Destroy(hit.transform.gameObject);
+                    isOnDestroy = false;
+                }
+            }
+        }
+    }
+    public void ClickDestroyBtn()
+    {
+        isOnDestroy = true;
+        Debug.Log(isOnDestroy);
     }
 
     void obstacleSpawner(Transform firstPointTr, Transform lastPointTr)
@@ -165,3 +215,13 @@ public class ObstacleSpawn : MonoBehaviour
         return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }
+
+/*
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

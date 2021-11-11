@@ -51,8 +51,10 @@ public class LaserTower : MonoBehaviour
                 if (hit.transform.CompareTag("Obstacle"))
                 {
                     position = hit.point;
+                    position.x = 10;
                     dir = Vector3.Reflect(dir, hit.normal);
                     line.SetPosition(i + 1, hit.point);
+                    Debug.Log(dir);
                 }
             }
             else
