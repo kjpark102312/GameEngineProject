@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - EndPoint
   - Tile
+  - Splitter
   layers:
   - Default
   - TransparentFX

@@ -51,24 +51,37 @@ public class LaserTower : MonoBehaviour
                 if (hit.transform.CompareTag("Obstacle"))
                 {
                     position = hit.point;
-                    position.x = 10;
                     dir = Vector3.Reflect(dir, hit.normal);
                     line.SetPosition(i + 1, hit.point);
-                    Debug.Log(dir);
+                }
+                else if(hit.transform.CompareTag("Splitter"))
+                {
+                    position = hit.point;
+
+                    Vector2 originDir = dir;
+                    dir = Vector3.Reflect(dir, hit.normal);
+                    line.SetPosition(i + 1, hit.point);
+
+                    GameObject laser = Instantiate(lineObj, position, Quaternion.identity);
+
+                    LineRenderer splitLine = laser.GetComponent<LineRenderer>();
+                    splitLine.SetPosition(0, position);
+                    splitLine.SetPosition(i + 1, position + originDir * 10);
                 }
             }
             else
             {
-                line.SetPosition(i+1, position + dir * 10f);
+                line.SetPosition(i + 1, position + dir * 10f);
+                Debug.LogWarning("여기여기요");
             }
         }
     }
+
     void EnemyHit(Vector2 position, Vector2 dir)
     {
         for (int i = 0; i < rayCount; i++)
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(position, dir, 10f, 1 << 6 | 1 << 7);
-            
             for (int j = 0; j < hits.Length; j++)
             {
                 RaycastHit2D hit = hits[j];
