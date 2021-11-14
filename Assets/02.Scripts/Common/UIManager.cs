@@ -23,9 +23,7 @@ public class UIManager : MonoBehaviour
     private bool stop;
 
     [SerializeField]
-    private GameObject reStartPanel;
-    [SerializeField]
-    private GameObject realReStartPanel;
+    private CanvasGroup reStartPanel;
     [SerializeField]
     private Text hpText;
     [SerializeField]
@@ -87,15 +85,9 @@ public class UIManager : MonoBehaviour
 
         if(GameManager.Instance.currentHp <= 0)
         {
-            reStartPanel.SetActive(true);
-            realReStartPanel.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.2f).OnComplete(() =>
-            {
-                realReStartPanel.transform.DOScale(new Vector3(1f, 1f, 1f), 0.4f).OnComplete(() =>
-                {
-                    Time.timeScale = 0;
-                });
-            });
-            
+            reStartPanel.alpha += Time.deltaTime * 1f;
+            reStartPanel.blocksRaycasts = true;
+            reStartPanel.interactable = true;
         }
     }
 

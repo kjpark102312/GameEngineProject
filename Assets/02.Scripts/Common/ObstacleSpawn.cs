@@ -23,10 +23,13 @@ public class ObstacleSpawn : MonoBehaviour
 
 
     private int obstacleCost = 50;
+    private int splitterCost = 50;
     private int destroyCost;
 
     [SerializeField]
     private Text obstacleCostText;
+    [SerializeField]
+    private Text splitterCostText;
 
     public GameObject towerParent;
 
@@ -42,9 +45,12 @@ public class ObstacleSpawn : MonoBehaviour
 
     private bool isClickPoint;
     private bool isOnDestroy;
+
+    public Obstacle obstacles;
     private void Start()
     {
         obstacleCostText.text = $"{obstacleCost}";
+        splitterCostText.text = $"{splitterCost}";
         buildPoints = buildPointsParent.gameObject.GetComponentsInChildren<Transform>();
     }
 
@@ -112,11 +118,19 @@ public class ObstacleSpawn : MonoBehaviour
 
     void CostCalculation()
     {
+        //Mirror
         obstacleCostText.text = $"{obstacleCost}";
         GameManager.Instance.gold -= obstacleCost;
         destroyCost = obstacleCost / 2;
         obstacleCost = (int)(((obstacleCost / 2) + obstacleCost) * 0.1f) * 10;
         obstacleCostText.text = $"{obstacleCost}";
+        //Splitter
+        splitterCostText.text = $"{splitterCost}";
+        GameManager.Instance.gold -= splitterCost;
+        destroyCost = splitterCost / 2;
+        splitterCost = (int)(((splitterCost / 2) + splitterCost) * 0.1f) * 10;
+        splitterCostText.text = $"{splitterCost}";
+
     }
     
 
@@ -141,10 +155,16 @@ public class ObstacleSpawn : MonoBehaviour
                     GameManager.Instance.gold += destroyCost;
                     Destroy(hit.transform.gameObject);
                     isOnDestroy = false;
+
+                    foreach(var list in hit.transform.gameObject.GetComponent<Obstacle>().points)
+                    {
+                        list.gameObject.SetActive(true);
+                    }
                 }
             }
         }
     }
+
     public void ClickDestroyBtn()
     {
         isOnDestroy = true;
@@ -156,7 +176,7 @@ public class ObstacleSpawn : MonoBehaviour
         Vector3 obstacleDir = firstPointTr.position - lastPointTr.position;
         float dis = obstacleDir.sqrMagnitude;
 
-        if (GameManager.Instance.gold > obstacleCost && dis < 2)
+        if (GameManager.Instance.gold > obstacleCost && dis < 2 && dis > 0)
         {
             Points firstPoint = firstPointTr.GetComponent<Points>();
             Points secondPoint = lastPointTr.GetComponent<Points>();
@@ -166,22 +186,25 @@ public class ObstacleSpawn : MonoBehaviour
                 return;
             }
 
+            GameObject Obstacles = Instantiate(horizontalObj, firstPointTr.position, Quaternion.identity);
+            obstacles = Obstacles.GetComponentInChildren<Obstacle>();
+
+            Obstacles.GetComponentInChildren<Obstacle>().points.Add(firstPointTr);
+            Obstacles.GetComponentInChildren<Obstacle>().points.Add(lastPointTr);
+
             firstPoint.isBuildObstacle = true;
             secondPoint.isBuildObstacle = true;
 
-            GameObject Obstacle = Instantiate(horizontalObj, firstPointTr.position, Quaternion.identity);
-            Debug.Log(GetAngel(obstacleDir.normalized, Obstacle.transform.right));
-
-            if (GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 90 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 0
-                || GetAngel(obstacleDir.normalized, Obstacle.transform.right) < 140 && GetAngel(obstacleDir.normalized, Obstacle.transform.right) > 130)
+            if (GetAngel(obstacleDir.normalized, Obstacles.transform.right) < 90 && GetAngel(obstacleDir.normalized, Obstacles.transform.right) > 0
+                || GetAngel(obstacleDir.normalized, Obstacles.transform.right) < 140 && GetAngel(obstacleDir.normalized, Obstacles.transform.right) > 130)
             {
-                Destroy(Obstacle);
+                Destroy(Obstacles);
                 Debug.Log(GetAngel(obstacleDir, horizontalObj.transform.forward));
                 Instantiate(horizontalObj, firstPointTr.position, Obstaclerotate(obstacleDir));
             }
             else
             {
-                Destroy(Obstacle);
+                Destroy(Obstacles);
                 Instantiate(verticalObj, firstPointTr.position, Obstaclerotate(obstacleDir));
             }
 
