@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: aec0d97a1d57ebf4bbf63cb687f92118
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - 210 Bameuihaebyun
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 983170a13915d0c42a227fc2f751cbc5, type: 3}
+  - {fileID: 12800000, guid: e0ff8de766314844a955c0d60a5db10e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
