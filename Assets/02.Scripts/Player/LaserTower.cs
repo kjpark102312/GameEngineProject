@@ -12,7 +12,7 @@ public class LaserTower : MonoBehaviour
 
     public float power = 3f;
 
-    private RaycastHit2D hit ;
+    private RaycastHit2D hit;
     private RaycastHit2D[] hits;
     private Vector3 laserDir;
 
@@ -22,12 +22,14 @@ public class LaserTower : MonoBehaviour
     public int obstacleCount;
     public int rayCount;
 
-    private void Awake() 
+    Vector2 direction;
+
+    private void Awake()
     {
         laserSpawner = GameObject.Find("LaserSpawner").GetComponent<LaserSpawner>();
     }
 
-    private void Start() 
+    private void Start()
     {
         laserDir = laserSpawner.laserDir;
         rayCount = line.positionCount - 1;
@@ -39,22 +41,57 @@ public class LaserTower : MonoBehaviour
         EnemyHit(transform.position, laserDir);
     }
 
+    private float CheckDis(Vector2 position, Vector2 dir)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(position, dir, Mathf.Infinity, 1 << 6);
+
+        if(hit)
+        {
+            Debug.Log(Vector2.Distance(position, hit.point));
+            return Mathf.Round(Vector2.Distance(position, hit.point));
+        }
+        else
+        {
+            return 10f;
+        }
+    }
+
+    
+
     void CastRay(Vector2 position, Vector2 dir)
     {
         line.SetPosition(0, transform.position);
-        for (int i = 0; i < rayCount; i++ )
+        for (int i = 0; i < rayCount; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(position, dir, 10f , 1 << 6);
+            RaycastHit2D hit = Physics2D.Raycast(position, dir, CheckDis(position, dir), 1 << 6);
             Debug.DrawRay(position, dir, Color.green);
             if (hit)
             {
                 if (hit.transform.CompareTag("Obstacle"))
                 {
                     position = hit.point;
-                    dir = Vector3.Reflect(dir, hit.normal);
+                    dir = Vector3.Reflect(dir, hit.normal).normalized;
+
+                    Debug.Log(dir.x);
+                    if (dir.x == 1.0f)
+                    {
+                        position.x = position.x + 0.1f;
+                    }
+                    else if (dir.x == -1.0f)
+                    {
+                        position.x = position.x - 0.1f;
+                    }
+                    else if (dir.y == 1.0f)
+                    {
+                        position.y = position.y + 0.1f;
+                    }
+                    else if (dir.y == -1.0f)
+                    { 
+                        position.y = position.y - 0.1f;
+                    }
                     line.SetPosition(i + 1, hit.point);
                 }
-                else if(hit.transform.CompareTag("Splitter"))
+                else if (hit.transform.CompareTag("Splitter"))
                 {
                     position = hit.point;
 
@@ -74,6 +111,7 @@ public class LaserTower : MonoBehaviour
                 line.SetPosition(i + 1, position + dir * 10f);
                 Debug.LogWarning("여기여기요");
             }
+            
         }
     }
 
@@ -91,7 +129,7 @@ public class LaserTower : MonoBehaviour
                     {
                         position = hit.point;
                         dir = Vector3.Reflect(dir, hit.normal);
-                        
+
                     }
                     else if (hit.transform.CompareTag("Enemy"))
                     {
