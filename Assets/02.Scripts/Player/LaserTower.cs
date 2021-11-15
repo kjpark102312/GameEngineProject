@@ -7,23 +7,23 @@ public class LaserTower : MonoBehaviour
 
     public GameObject lineObj;
     public LineRenderer line;
+    private LineRenderer splitLine;
 
     public LaserSpawner laserSpawner;
 
     public float power = 3f;
 
-    private RaycastHit2D hit;
-    private RaycastHit2D[] hits;
     private Vector3 laserDir;
-
-    private bool isBlock = false;
-    private bool isHitObstacle = false;
 
     public int obstacleCount;
     public int rayCount;
 
-    Vector2 direction;
+    public List<Vector2> colPoints = new List<Vector2>();
 
+    private EnemyHp enemy;
+    private EdgeCollider2D col;
+
+    bool istest = true;
     private void Awake()
     {
         laserSpawner = GameObject.Find("LaserSpawner").GetComponent<LaserSpawner>();
@@ -37,7 +37,7 @@ public class LaserTower : MonoBehaviour
 
     void Update()
     {
-        CastRay(transform.position, laserDir);
+        CastRay(transform.position, laserDir, line);
         EnemyHit(transform.position, laserDir);
     }
 
@@ -47,7 +47,6 @@ public class LaserTower : MonoBehaviour
 
         if(hit)
         {
-            Debug.Log(Vector2.Distance(position, hit.point));
             return Mathf.Round(Vector2.Distance(position, hit.point));
         }
         else
@@ -58,13 +57,12 @@ public class LaserTower : MonoBehaviour
 
     
 
-    void CastRay(Vector2 position, Vector2 dir)
+    void CastRay(Vector2 position, Vector2 dir, LineRenderer line)
     {
         line.SetPosition(0, transform.position);
         for (int i = 0; i < rayCount; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(position, dir, CheckDis(position, dir), 1 << 6);
-            Debug.DrawRay(position, dir, Color.green);
             if (hit)
             {
                 if (hit.transform.CompareTag("Obstacle"))
@@ -89,21 +87,17 @@ public class LaserTower : MonoBehaviour
                     { 
                         position.y = position.y - 0.1f;
                     }
+
                     line.SetPosition(i + 1, hit.point);
                 }
                 else if (hit.transform.CompareTag("Splitter"))
                 {
                     position = hit.point;
 
-                    Vector2 originDir = dir;
+                    InstantiateLaser(position, dir, i);
+
                     dir = Vector3.Reflect(dir, hit.normal);
                     line.SetPosition(i + 1, hit.point);
-
-                    GameObject laser = Instantiate(lineObj, position, Quaternion.identity);
-
-                    LineRenderer splitLine = laser.GetComponent<LineRenderer>();
-                    splitLine.SetPosition(0, position);
-                    splitLine.SetPosition(i + 1, position + originDir * 10);
                 }
             }
             else
@@ -111,7 +105,6 @@ public class LaserTower : MonoBehaviour
                 line.SetPosition(i + 1, position + dir * 10f);
                 Debug.LogWarning("여기여기요");
             }
-            
         }
     }
 
@@ -120,23 +113,44 @@ public class LaserTower : MonoBehaviour
         for (int i = 0; i < rayCount; i++)
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(position, dir, 10f, 1 << 6 | 1 << 7);
+            Debug.DrawRay(position, dir, Color.green);
             for (int j = 0; j < hits.Length; j++)
             {
                 RaycastHit2D hit = hits[j];
                 if (hit)
                 {
-                    if (hit.transform.CompareTag("Obstacle"))
+                    if (hit.transform.CompareTag("Obstacle") || hit.transform.CompareTag("Splitter"))
                     {
                         position = hit.point;
                         dir = Vector3.Reflect(dir, hit.normal);
-
                     }
                     else if (hit.transform.CompareTag("Enemy"))
                     {
-                        hit.transform.GetComponent<EnemyHp>().GetDamage(power * Time.deltaTime);
+                        enemy = hit.transform.GetComponent<EnemyHp>();
+
+                        enemy.power = power * Time.deltaTime;
+                        enemy.GetDamage();
                     }
                 }
             }
         }
+    }
+
+    private void InstantiateLaser(Vector2 position, Vector2 dir, int i)
+    {
+        if(this.istest)
+        {
+            GameObject laser = Instantiate(lineObj, position, Quaternion.identity);
+            laser.transform.parent = transform.parent.parent;
+
+            splitLine = laser.GetComponent<LineRenderer>();
+        }
+        
+        Vector2 originDir = dir;
+
+        CastRay(position, originDir, splitLine);
+        EnemyHit(position, originDir);
+
+        this.istest = false;
     }
 }

@@ -8,8 +8,12 @@ public class ObstacleSpawn : MonoBehaviour
 {
 
 
+    public GameObject obstacle;
+
     public GameObject horizontalObj;
     public GameObject verticalObj;
+
+    public GameObject splitter;
 
     [SerializeField]
     private List<Transform> points;
@@ -39,7 +43,7 @@ public class ObstacleSpawn : MonoBehaviour
     [SerializeField]
     private GameObject buildPointsParent;
 
-    public Transform[] buildPoints;
+    public List<Transform> buildPoints = new List<Transform>();
 
     private float shortDis;
 
@@ -51,7 +55,13 @@ public class ObstacleSpawn : MonoBehaviour
     {
         obstacleCostText.text = $"{obstacleCost}";
         splitterCostText.text = $"{splitterCost}";
-        buildPoints = buildPointsParent.gameObject.GetComponentsInChildren<Transform>();
+        //buildPoints = buildPointsParent.gameObject.GetComponentsInChildren<Transform>();
+
+        
+        for(int i = 0; i < buildPointsParent.transform.childCount; i++)
+        {
+            //buildPoints.Add();
+        }
     }
 
     void Update()
@@ -68,7 +78,7 @@ public class ObstacleSpawn : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Debug.DrawRay(mousePos, transform.forward, Color.red, Mathf.Infinity);
 
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, transform.forward, Mathf.Infinity, 1<<8);
 
             if (hit.collider == null) return;
 
@@ -91,7 +101,7 @@ public class ObstacleSpawn : MonoBehaviour
             {
                 shortDis = Vector2.Distance(hits.point, buildPoints[0].transform.position);
 
-                for (int i = 0; i < buildPoints.Length - 1; i++)
+                for (int i = 0; i < buildPoints.Count - 1; i++)
                 {
                     float distance = Vector2.Distance(hits.point, buildPoints[i].position);
 
@@ -186,7 +196,7 @@ public class ObstacleSpawn : MonoBehaviour
                 return;
             }
 
-            GameObject Obstacles = Instantiate(horizontalObj, firstPointTr.position, Quaternion.identity);
+            GameObject Obstacles = Instantiate(obstacle, firstPointTr.position, Quaternion.identity);
             obstacles = Obstacles.GetComponentInChildren<Obstacle>();
 
             Obstacles.GetComponentInChildren<Obstacle>().points.Add(firstPointTr);
@@ -200,7 +210,7 @@ public class ObstacleSpawn : MonoBehaviour
             {
                 Destroy(Obstacles);
                 Debug.Log(GetAngel(obstacleDir, horizontalObj.transform.forward));
-                Instantiate(horizontalObj, firstPointTr.position, Obstaclerotate(obstacleDir));
+                Instantiate(obstacle, firstPointTr.position, Obstaclerotate(obstacleDir));
             }
             else
             {
@@ -236,6 +246,19 @@ public class ObstacleSpawn : MonoBehaviour
         else if (angle < 0 && angle > -50) angle = -45;
 
         return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    public void MirrorOrSplitterBtn(string type)
+    {
+        if(type == "Mirror")
+        {
+            obstacle = horizontalObj;
+
+        }
+        else if (type == "Splitter")
+        {
+            obstacle = splitter;
+        }
     }
 }
 

@@ -186,7 +186,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 100
     m_FontStyle: 1
     m_BestFit: 1
@@ -217,6 +217,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -384,6 +388,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (24)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 24
@@ -469,6 +477,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -839,6 +851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -971,7 +987,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -1067,8 +1083,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48985c5cbd0e8f49ad40a1c02675fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacle: {fileID: 7645917913564909150, guid: 3f9167a92665f4f4b83a437182724df4, type: 3}
   horizontalObj: {fileID: 7645917913564909150, guid: 3f9167a92665f4f4b83a437182724df4, type: 3}
   verticalObj: {fileID: 2951469175164006997, guid: e327ea07ebcef494a84dd8dfefff4123, type: 3}
+  splitter: {fileID: 723662642814002438, guid: 169e52626a34baa4ea2f278d623dd34f, type: 3}
   points: []
   nearPoint: {fileID: 0}
   laserSpawner: {fileID: 162885752}
@@ -2230,6 +2248,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 22
@@ -2393,6 +2415,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -2633,7 +2659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &553236479
 Transform:
   m_ObjectHideFlags: 0
@@ -2740,6 +2766,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -2910,6 +2940,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -3043,7 +3077,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -3152,6 +3186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -3236,6 +3274,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -3370,7 +3412,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -3430,7 +3472,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3732,7 +3774,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3911,7 +3953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.026788909, g: 0.8113208, b: 0.5850508, a: 1}
+  m_Color: {r: 0.03529412, g: 0.76862746, b: 0.6392157, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3919,7 +3961,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 150
     m_FontStyle: 0
     m_BestFit: 1
@@ -4034,6 +4076,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -5028,6 +5074,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -5161,7 +5211,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -5639,6 +5689,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -5890,6 +5944,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -5975,6 +6033,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -6701,7 +6763,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1165469409}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 320853432}
+        m_TargetAssemblyTypeName: ObstacleSpawn, Assembly-CSharp
+        m_MethodName: MirrorOrSplitterBtn
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Mirror
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1165469409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7057,7 +7131,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -7088,6 +7162,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -7252,7 +7330,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -7832,6 +7910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -8106,7 +8188,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -9228,7 +9310,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1755839851}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 320853432}
+        m_TargetAssemblyTypeName: ObstacleSpawn, Assembly-CSharp
+        m_MethodName: MirrorOrSplitterBtn
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Splitter
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1755839851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9277,6 +9371,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -9692,6 +9790,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -9886,6 +9988,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -10236,6 +10342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 23
@@ -10406,6 +10516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -10490,6 +10604,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -11007,7 +11125,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: aec0d97a1d57ebf4bbf63cb687f92118, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -11038,6 +11156,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder
@@ -11224,6 +11346,7 @@ MonoBehaviour:
   enemyList: []
   enemyHPSlider: {fileID: 5627358249816215058, guid: 98675bdc3a9eab24d992e08bc9f196d3, type: 3}
   canvasTr: {fileID: 1137356016}
+  allEnemyCount: 0
 --- !u!4 &2130118072
 Transform:
   m_ObjectHideFlags: 0
@@ -11258,6 +11381,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 3
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 9
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11268,6 +11392,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 3
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 11
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11279,6 +11404,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 3
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 11
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11290,6 +11416,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 3
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 11
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11301,6 +11428,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 0
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 6
     enemyPrefabs:
     - {fileID: 6339586242990827453, guid: 37b639aee91fb554e8c481fdefc11f91, type: 3}
@@ -11312,6 +11440,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 3
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 9
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11322,6 +11451,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 0
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 10
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11332,6 +11462,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 0
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 10
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11342,6 +11473,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 0
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 10
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11352,6 +11484,7 @@ MonoBehaviour:
     CSwaitEnemyCount: 0
     TSwaitEnemyCount: 0
     SSwaitEnemyCount: 0
+    currentEnemyCount: 0
     maxEnemyCount: 10
     enemyPrefabs:
     - {fileID: 4506441237580564895, guid: e6634b9f3cf209540952c603f570d086, type: 3}
@@ -11366,6 +11499,10 @@ PrefabInstance:
     - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_Name
       value: Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129112955752970438, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9129112955752970488, guid: 96b0c32f7df3bdc449703e72538104e4, type: 3}
       propertyPath: m_RootOrder

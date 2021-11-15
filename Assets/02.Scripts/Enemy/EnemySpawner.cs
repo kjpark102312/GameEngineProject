@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private Transform canvasTr;
 
 
-    private int allEnemyCount = 0;
+    public int allEnemyCount = 0;
     private int spawnCSEnemyCount = 0;
     private int spawnTSEnemyCount = 0;
     private int spawnSSEnemyCount = 0;
@@ -45,6 +45,8 @@ public class EnemySpawner : MonoBehaviour
 
             SpawnEnemyHPBar(clone);
 
+            enemyList.Add(clone);
+
             yield return new WaitForSeconds(currentWave.CSspawnTime);
 
             spawnCSEnemyCount++;
@@ -56,6 +58,8 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+
+
     public IEnumerator TSEnemySpawn()
     {
         if (currentWave.enemyPrefabs[1] != null)
@@ -67,6 +71,7 @@ public class EnemySpawner : MonoBehaviour
                 GameObject clone = Instantiate(currentWave.enemyPrefabs[1], transform.position, Quaternion.identity);
 
                 SpawnEnemyHPBar(clone);
+                enemyList.Add(clone);
                 spawnTSEnemyCount++;
                 allEnemyCount++;
             }
@@ -74,7 +79,6 @@ public class EnemySpawner : MonoBehaviour
     }
     public IEnumerator SSEnemySpawn()
     {
-
         if(currentWave.enemyPrefabs[2] != null)
         {
             while (allEnemyCount < currentWave.maxEnemyCount)
@@ -83,12 +87,18 @@ public class EnemySpawner : MonoBehaviour
 
                 GameObject clone = Instantiate(currentWave.enemyPrefabs[2], transform.position, Quaternion.identity);
                 SpawnEnemyHPBar(clone);
+                enemyList.Add(clone);
                 spawnSSEnemyCount++;
                 allEnemyCount++;
             }
         }
     }
 
+    public void DestroyEnemy()
+    {
+
+        //enemyList.Remove()
+    }
 
     public void SpawnEnemyHPBar(GameObject enemy)
     {

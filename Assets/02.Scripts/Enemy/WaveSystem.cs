@@ -17,7 +17,7 @@ public class WaveSystem : MonoBehaviour
 
     public void StartWave()
     {
-        if(currentWave < waves.Length -1)
+        if(currentWave < waves.Length -1 && enemySpawner.enemyList.Count == 0)
         {
             GameManager.Instance.currentWaveIndex++;
             currentWave++;
@@ -39,6 +39,7 @@ public struct Wave
     public int CSwaitEnemyCount;
     public int TSwaitEnemyCount;
     public int SSwaitEnemyCount;
+    public int currentEnemyCount;
     public int maxEnemyCount;
     public GameObject[] enemyPrefabs;
 }

@@ -21,6 +21,7 @@ public class LaserSpawner : MonoBehaviour
 
     public Vector2 laserDir;
 
+
     public void ShowLaserSpawnTr()
     {
         if (laserTrPanel.activeSelf == true) laserTrPanel.SetActive(false);

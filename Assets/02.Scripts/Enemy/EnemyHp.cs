@@ -4,17 +4,16 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 
-public class EnemyHp : MonoBehaviour, IDamageable
+public class EnemyHp : MonoBehaviour
 {
     public float maxHP = 1000;
     public float currentHP = 1000;
 
-    private float coolTime = 0.8f;
-    private float baseTime = 0;
-
     public GameObject floatingText;
 
-    public void GetDamage(float power)
+    public float power;
+    
+    public void GetDamage()
     {
         currentHP -= power;
 
